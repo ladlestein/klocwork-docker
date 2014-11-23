@@ -19,16 +19,19 @@ RUN chmod 755 klocwork_installer.sh
 
 # Should EXPOSE 8080 here, right?
 
-EXPOSE 22,8080,27000
+EXPOSE 22 8080 27000
 
 ADD klocwork.lic /home/klocwork/klocwork.lic
 RUN chmod 755 klocwork.lic
 
-RUN su klocwork -c "./klocwork_installer.sh -a server KlocworkServer LicenseServer BuildTools" \
-    && su klocwork -c "mkdir -p server/projects_root/licenses" \
-    && su klocwork -c "cp klocwork.lic server/projects_root/licenses"
+WORKDIR /home/klocwork
+
+RUN su klocwork -c "./klocwork_installer.sh -a server KlocworkServer LicenseServer BuildTools"
+
+VOLUME /home/klocwork/server/projects_root
 
 #CMD ["/usr/bin/supervisord"]
 CMD /usr/sbin/sshd \
+    && su klocwork -c "cp klocwork.lic server/projects_root/licenses" \
     && su klocwork -c "server/bin/kwservice -r server/projects_root start" \
     && tail -f server/projects_root/logs/klocwork.log
