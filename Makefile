@@ -48,6 +48,19 @@ start-slave:
 		--add-host kw1:192.168.10.11 \
 		$(USER)/kw-analysis-slave
 
+start-seeker:
+	weave run 192.168.10.13/24 -h seeker.weave.local --name seeker \
+		-p 22 \
+		--add-host master.weave.local:192.168.10.10 \
+		--add-host master:192.168.10.10 \
+		--add-host kw1.weave.local:192.168.10.11 \
+		--add-host kw1:192.168.10.11 \
+		-e KWSEEKER_JENKINS_SERVER_IP=master.weave.local \
+		-e KWSEEKER_JENKINS_SERVER_PORT=8080 \
+		-e KWSEEKER_KLOCWORK_USERNAME=klocwork \
+		-e KWSEEKER_KLOCWORK_API_ENDPOINT="http://kw1.weave.local:8080/review/api" \
+-i -t		$(USER)/kw-seeker /bin/bash
+
 start-projects_root:
 	docker run -d --name projects_root $(USER)/projects_root echo Data-only container for Klocwork projects_root
 
