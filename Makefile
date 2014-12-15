@@ -59,7 +59,7 @@ start-seeker:
 		-e KWSEEKER_JENKINS_SERVER_PORT=8080 \
 		-e KWSEEKER_KLOCWORK_USERNAME=klocwork \
 		-e KWSEEKER_KLOCWORK_API_ENDPOINT="http://kw1.weave.local:8080/review/api" \
--i -t		$(USER)/kw-seeker /bin/bash
+		$(USER)/kw-seeker
 
 start-projects_root:
 	docker run -d --name projects_root $(USER)/projects_root echo Data-only container for Klocwork projects_root
