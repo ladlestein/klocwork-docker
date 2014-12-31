@@ -55,10 +55,14 @@ start-seeker:
 		--add-host master:192.168.10.10 \
 		--add-host kw1.weave.local:192.168.10.11 \
 		--add-host kw1:192.168.10.11 \
-		-e KWSEEKER_JENKINS_SERVER_IP=master.weave.local \
-		-e KWSEEKER_JENKINS_SERVER_PORT=8080 \
-		-e KWSEEKER_KLOCWORK_USERNAME=klocwork \
-		-e KWSEEKER_KLOCWORK_API_ENDPOINT="http://kw1.weave.local:8080/review/api" \
+		-e KWSEEKER_JENKINS_HOST=master.weave.local \
+		-e KWSEEKER_JENKINS_PORT=8080 \
+		-e KWSEEKER_KW_USERNAME=klocwork \
+		-e KWSEEKER_KW_HOST="kw1.weave.local" \
+		-e KWSEEKER_GITHUB_REPO="joyent/node" \
+		-e KWSEEKER_KW_PROJECT_NAME="node.js" \
+		-e KWSEEKER_BUILD_COMMAND="make" \
+		-e KWSEEKER_PREBUILD_COMMAND="./configure" \
 		$(USER)/kw-seeker
 
 start-projects_root:
