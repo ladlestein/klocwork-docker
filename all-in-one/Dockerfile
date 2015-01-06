@@ -28,10 +28,9 @@ WORKDIR /home/klocwork
 
 RUN su klocwork -c "./klocwork_installer.sh -a server KlocworkServer LicenseServer BuildTools"
 
-VOLUME /home/klocwork/server/projects_root
-
 #CMD ["/usr/bin/supervisord"]
 CMD /usr/sbin/sshd \
-    && su klocwork -c "cp klocwork.lic server/projects_root/licenses" \
-    && su klocwork -c "server/bin/kwservice -r server/projects_root start" \
-    && tail -f server/projects_root/logs/klocwork.log
+    && su klocwork -c "if [ ! -e /opt/klocwork/projects_root/config ]; then server/bin/kwservice setup -r /opt/klocwork/projects_root; fi" \
+    && su klocwork -c "cp klocwork.lic /opt/klocwork/projects_root/licenses" \
+    && su klocwork -c "server/bin/kwservice -r /opt/klocwork/projects_root start" \
+    && tail -f /opt/klocwork/projects_root/logs/klocwork.log
