@@ -1,5 +1,5 @@
 FROM jenkins:1.583
-MAINTAINER Matt Smith <mtscout6@gmail.com>
+MAINTAINER Larry Edelstein <ladlestein@gmail.com>
 
 USER root
 
