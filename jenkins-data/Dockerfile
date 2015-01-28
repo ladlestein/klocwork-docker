@@ -1,6 +1,6 @@
 #FROM busybox
 FROM ubuntu:14.04
-MAINTAINER Matt Smith <mtscout6@gmail.com>
+MAINTAINER Larry Edelstein <ladlestein@gmail.com>
 
 RUN useradd -u 1000 jenkins \
   && mkdir -p /var/jenkins_home \
