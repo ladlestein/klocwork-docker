@@ -8,6 +8,7 @@ RUN useradd klocwork \
     && apt-get update -y \
     && apt-get install -y lib32tinfo5 \
     && apt-get install -y build-essential \
+    && apt-get install -y maven \
     && mkdir -p /home/klocwork \
     && chown klocwork:klocwork /home/klocwork
 
