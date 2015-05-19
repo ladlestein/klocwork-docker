@@ -36,7 +36,7 @@ start-jenkins-server:
 # --hostname specified because the KW server reports the license server hostname back to kwadmin, and the internal
 # hostname of the server isn't known by the outside world.
 start-kw:
-	docker rm -f kw1
+	-docker rm -f kw1
 	weave run 192.168.10.11/24 -h kw1.weave.local --name kw1 \
 		-p 3030:8080 -p 49000:22 -p 27000:27000 \
 		--volumes-from=projects_root \

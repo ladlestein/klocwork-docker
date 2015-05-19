@@ -14,12 +14,8 @@ RUN useradd klocwork \
 WORKDIR /home/klocwork
 
 ADD klocwork_installer.sh /home/klocwork/klocwork_installer.sh
-ADD klocwork.lic /home/klocwork/klocwork.lic
 
 RUN chmod 755 klocwork_installer.sh \
-    && chmod 755 klocwork.lic \
-    && su klocwork -c "./klocwork_installer.sh -a client BuildTools" \
-    && su klocwork -c "mkdir -p server/projects_root/licenses" \
-    && su klocwork -c "cp klocwork.lic server/projects_root/licenses"
+    && su klocwork -c "./klocwork_installer.sh -a client BuildTools"
 
 USER jenkins

@@ -7,8 +7,8 @@ RUN useradd klocwork \
     && apt-get update -y \
     && apt-get install -y lib32tinfo5 libaio1 \
     && apt-get install -y openssh-server supervisor \
-    && mkdir -p /home/klocwork /var/run/sshd /var/log/supervisor \
-    && chown klocwork:klocwork /home/klocwork
+    && mkdir -p /home/klocwork /var/run/sshd /var/log/supervisor /usr/tmp/.flexlm \
+    && chown klocwork:klocwork /home/klocwork /usr/tmp/.flexlm
 
 WORKDIR /home/klocwork
 
@@ -16,8 +16,6 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ADD klocwork_installer.sh /home/klocwork/klocwork_installer.sh
 RUN chmod 755 klocwork_installer.sh
-
-# Should EXPOSE 8080 here, right?
 
 EXPOSE 22 8080 27000
 
@@ -28,7 +26,6 @@ WORKDIR /home/klocwork
 
 RUN su klocwork -c "./klocwork_installer.sh -a server KlocworkServer LicenseServer BuildTools"
 
-#CMD ["/usr/bin/supervisord"]
 CMD /usr/sbin/sshd \
     && su klocwork -c "if [ ! -e /opt/klocwork/projects_root/config ]; then server/bin/kwservice setup -r /opt/klocwork/projects_root; fi" \
     && su klocwork -c "cp klocwork.lic /opt/klocwork/projects_root/licenses" \
