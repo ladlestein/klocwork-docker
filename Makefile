@@ -25,7 +25,7 @@ start-data:
 	docker run -d --name jenkins-data $(USER)/jenkins-data echo Data-only container for Jenkins
 
 start-jenkins-server:
-	docker rm -f master
+	-docker rm -f master
 	weave run 192.168.10.10/24 -h master.weave.local --name master \
 		-d -p 50000:50000 -p 3010:8080 \
 		--volumes-from jenkins-data \
@@ -43,7 +43,7 @@ start-kw:
 		$(USER)/kw-all-in-one
 
 start-slave:
-	docker rm -f slave
+	-docker rm -f slave
 	weave run 192.168.10.12/24 -h slave.weave.local --name slave \
 		-p 22 \
 		--add-host master.weave.local:192.168.10.10 \
@@ -53,7 +53,7 @@ start-slave:
 		$(USER)/kw-analysis-slave
 
 start-seeker:
-	docker rm -f seeker
+	-docker rm -f seeker
 	weave run 192.168.10.13/24 -h seeker.weave.local --name seeker \
 		-p 22 \
 		--add-host master.weave.local:192.168.10.10 \
